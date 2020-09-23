@@ -4,12 +4,10 @@
  * Date: 10/01/04
  * Authors:
  */
-package stream;
+package src.stream;
 
 import java.io.*;
 import java.net.*;
-
-
 
 public class EchoClient {
 
@@ -18,7 +16,7 @@ public class EchoClient {
   *  main method
   *  accepts a connection, receives a message from client then sends an echo to the client
   **/
-    public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException {
 
         Socket echoSocket = null;
         PrintStream socOut = null;
@@ -33,30 +31,32 @@ public class EchoClient {
         try {
       	    // creation socket ==> connexion
       	    echoSocket = new Socket(args[0],new Integer(args[1]).intValue());
-	    socIn = new BufferedReader(
-	    		          new InputStreamReader(echoSocket.getInputStream()));    
-	    socOut= new PrintStream(echoSocket.getOutputStream());
-	    stdIn = new BufferedReader(new InputStreamReader(System.in));
-        } catch (UnknownHostException e) {
-            System.err.println("Don't know about host:" + args[0]);
-            System.exit(1);
-        } catch (IOException e) {
-            System.err.println("Couldn't get I/O for "
-                               + "the connection to:"+ args[0]);
-            System.exit(1);
-        }
+            socIn = new BufferedReader(
+                              new InputStreamReader(echoSocket.getInputStream()));
+            socOut= new PrintStream(echoSocket.getOutputStream());
+            stdIn = new BufferedReader(new InputStreamReader(System.in));
+            } catch (UnknownHostException e) {
+                System.err.println("Don't know about host:" + args[0]);
+                System.exit(1);
+            } catch (IOException e) {
+                System.err.println("Couldn't get I/O for "
+                                   + "the connection to:"+ args[0]);
+                System.exit(1);
+            }
                              
         String line;
+        EchoClientReadThread ecrt = new EchoClientReadThread(socIn);
+        ecrt.start();
         while (true) {
         	line=stdIn.readLine();
         	if (line.equals(".")) break;
         	socOut.println(line);
-        	System.out.println("echo: " + socIn.readLine());
+        	//System.out.println("echo: " + socIn.readLine());
         }
-      socOut.close();
-      socIn.close();
-      stdIn.close();
-      echoSocket.close();
+        socOut.close();
+        socIn.close();
+        stdIn.close();
+        echoSocket.close();
     }
 }
 

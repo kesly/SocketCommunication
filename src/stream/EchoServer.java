@@ -5,7 +5,7 @@
  * Authors:
  */
 
-package stream;
+package src.stream;
 
 import java.io.*;
 import java.net.*;
@@ -47,7 +47,7 @@ public class EchoServer  {
 		listenSocket = new ServerSocket(Integer.parseInt(args[0])); //port
 		while (true) {
 			Socket clientSocket = listenSocket.accept();
-			System.out.println("connexion from:" + clientSocket.getInetAddress());
+			System.out.println("connexion from:" + clientSocket.getInetAddress()+", Port: "+clientSocket.getLocalPort());
 			doService(clientSocket);
 		}
         } catch (Exception e) {

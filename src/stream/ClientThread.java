@@ -5,7 +5,7 @@
  * Authors:
  */
 
-package stream;
+package src.stream;
 
 import java.io.*;
 import java.net.*;
@@ -14,6 +14,7 @@ public class ClientThread
 	extends Thread {
 	
 	private Socket clientSocket;
+	private String inputClient;
 	
 	ClientThread(Socket s) {
 		this.clientSocket = s;
@@ -24,19 +25,25 @@ public class ClientThread
   	* @param clientSocket the client socket
   	**/
 	public void run() {
-    	  try {
+		try {
     		BufferedReader socIn = null;
     		socIn = new BufferedReader(
     			new InputStreamReader(clientSocket.getInputStream()));    
     		PrintStream socOut = new PrintStream(clientSocket.getOutputStream());
     		while (true) {
-    		  String line = socIn.readLine();
-    		  socOut.println(line);
+    		  	String line = socIn.readLine();
+    		  	inputClient = line;
+				EchoServerMultiThreaded.addMessage(line);
+				//socOut.println(EchoServerMultiThreaded.getMessage());
     		}
     	} catch (Exception e) {
         	System.err.println("Error in EchoServer:" + e); 
         }
-       }
+	}
+
+	public String getInput(){
+		return inputClient;
+	}
   
   }
 
