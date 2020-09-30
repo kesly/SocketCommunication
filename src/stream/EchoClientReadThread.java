@@ -14,7 +14,7 @@ public class EchoClientReadThread extends Thread {
 
         while (true){
             try {
-                System.out.println("echo: " + this.socIn.readLine());
+                System.out.println(this.socIn.readLine());
             } catch (IOException e) {
                 e.printStackTrace();
             }

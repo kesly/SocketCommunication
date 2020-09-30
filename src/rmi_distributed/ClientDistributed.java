@@ -1,7 +1,8 @@
-package src.stream;
+package src.rmi_distributed;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Scanner;
 
 public class ClientDistributed {
 
@@ -22,6 +23,14 @@ public class ClientDistributed {
             BroadCast  broadCast = (BroadCast) registry.lookup("Great");
             String res = broadCast.sayHello();
             System.out.println(res);
+
+            while(true) {
+                Scanner sc = new Scanner(System.in);
+                String msg = sc.nextLine();
+                broadCast.sendMessage(msg);
+                res = broadCast.sayHello();
+                System.out.println(res);
+            }
         } catch (Exception e) {
             System.err.println("Error on client: "+e);
             e.printStackTrace();

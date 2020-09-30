@@ -7,6 +7,8 @@
 
 package src.stream;
 
+import javafx.util.Pair;
+
 import java.io.PrintStream;
 import java.net.*;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ public class EchoServerMultiThreaded  {
   	* 
   	**/
  	private static ArrayList<String> messages = new ArrayList<>();
- 	private static ArrayList<PrintStream> clientsOutput = new ArrayList<>();
+ 	private static ArrayList<Pair<Boolean, PrintStream> > clientsOutput = new ArrayList<>();
 
  	public static void main(String args[]){
 
@@ -32,13 +34,13 @@ public class EchoServerMultiThreaded  {
 		try {
 			listenSocket = new ServerSocket(Integer.parseInt(args[0])); //port
 			System.out.println("Server ready...");
-			ClientOutputThread cot = new ClientOutputThread();
+			ServerOutputThread cot = new ServerOutputThread();
 			cot.start();
 			while (true) {
 				Socket clientSocket = listenSocket.accept();
 				System.out.println("Connexion from:" + clientSocket.getInetAddress()+", Port: "+clientSocket.getPort());
 				ClientThread ct = new ClientThread(clientSocket);
-				clientsOutput.add(new PrintStream(clientSocket.getOutputStream()));
+				clientsOutput.add(new Pair<>(true, new PrintStream(clientSocket.getOutputStream())));
 				ct.start();
 
 			}
@@ -47,12 +49,12 @@ public class EchoServerMultiThreaded  {
 			}
  	}
 
-	public static ArrayList<PrintStream> getClientsOutput() {
+	public static ArrayList<Pair<Boolean, PrintStream>> getClientsOutput() {
 		return clientsOutput;
 	}
 
-	public static void setClientsOutput(ArrayList<PrintStream> clientsOutput) {
-		EchoServerMultiThreaded.clientsOutput = clientsOutput;
+	public static void setOldClient(int index, PrintStream clientStream){
+ 		clientsOutput.set(index, new Pair<>(false, clientStream));
 	}
 
 	public static synchronized ArrayList<String> getMessages() {
