@@ -1,15 +1,10 @@
 package src.stream;
 
 import javafx.util.Pair;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.net.Socket;
 
 public class ServerOutputThread extends Thread {
 
-    //private Socket clientSocket;
     private int currentIndex = 0;
 
     ServerOutputThread() {
@@ -23,19 +18,19 @@ public class ServerOutputThread extends Thread {
         try {
             while (true) {
 
-                //System.out.println("Size : "+EchoServerMultiThreaded.getMessages().size()+"Index : "+this.currentIndex);
-                //for (Pair<Boolean, PrintStream> pairSocOut : EchoServerMultiThreaded.getClientsOutput()) {
                 for (int j = 0; j<EchoServerMultiThreaded.getClientsOutput().size(); j++) {
                     Pair<Boolean, PrintStream> pairSocOut = EchoServerMultiThreaded.getClientsOutput().get(j);
                     if(pairSocOut.getKey()){
                         for (int i = 0; i<EchoServerMultiThreaded.getMessages().size(); i++) {
-                            pairSocOut.getValue().println(EchoServerMultiThreaded.getMessages().get(i));
+                            pairSocOut.getValue().println(EchoServerMultiThreaded.getMessages().get(i).getKey()+" : "+EchoServerMultiThreaded.getMessages().get(i).getValue());
                             EchoServerMultiThreaded.setOldClient(j, pairSocOut.getValue());
                         }
                     }else {
+                        System.out.println("entree 0000 : "+this.currentIndex);
                         if (EchoServerMultiThreaded.getMessages().size() > this.currentIndex) {
+                            System.out.println("entree");
                             for (int i = this.currentIndex; i < EchoServerMultiThreaded.getMessages().size(); i++) {
-                                pairSocOut.getValue().println(EchoServerMultiThreaded.getMessages().get(i));
+                                pairSocOut.getValue().println(EchoServerMultiThreaded.getMessages().get(i).getKey()+" : "+EchoServerMultiThreaded.getMessages().get(i).getValue());
                             }
                         }
                     }

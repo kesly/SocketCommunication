@@ -7,6 +7,8 @@
 
 package src.stream;
 
+import javafx.util.Pair;
+
 import java.io.*;
 import java.net.*;
 
@@ -14,10 +16,11 @@ public class ClientThread
 	extends Thread {
 	
 	private Socket clientSocket;
-	private String inputClient;
+	private String clientNickname;
 	
-	ClientThread(Socket s) {
+	ClientThread(Socket s, String clientNickname) {
 		this.clientSocket = s;
+		this.clientNickname = clientNickname;
 	}
 
  	/**
@@ -32,8 +35,7 @@ public class ClientThread
     		PrintStream socOut = new PrintStream(clientSocket.getOutputStream());
     		while (true) {
     		  	String line = socIn.readLine();
-    		  	inputClient = line;
-				EchoServerMultiThreaded.addMessage(line);
+				EchoServerMultiThreaded.addMessage(clientNickname, line);
 				//socOut.println(EchoServerMultiThreaded.getMessage());
     		}
     	} catch (Exception e) {
@@ -41,10 +43,7 @@ public class ClientThread
         }
 	}
 
-	public String getInput(){
-		return inputClient;
-	}
-  
+
   }
 
   

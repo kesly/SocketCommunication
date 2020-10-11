@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class EchoClientReadThread extends Thread {
-    BufferedReader socIn = null;
+    BufferedReader socIn;
 
     public EchoClientReadThread(BufferedReader socIn){
         this.socIn = socIn;

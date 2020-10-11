@@ -1,10 +1,9 @@
 package src.stream;
 
-import java.io.PrintStream;
 import java.net.DatagramPacket;
 import java.net.MulticastSocket;
 
-public class ClientMulticastOutputThread extends  Thread {
+public class ClientMulticastOutputThread extends Thread {
 
     private int currentIndex = 0;
     private MulticastSocket multicastSocket;
@@ -23,7 +22,9 @@ public class ClientMulticastOutputThread extends  Thread {
         try {
             while (true) {
                 multicastSocket.receive(recv);
-                System.out.println( "Rentrée "+new String(recv.getData() ) );
+                System.out.println(new String(recv.getData() ) );
+                buf = new byte[1000];
+                recv = new  DatagramPacket(buf, buf.length);
             }
 
         } catch (Exception e) {

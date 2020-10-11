@@ -1,4 +1,4 @@
-package src.stream;
+package src.rmi_distributed;
 
 import src.rmi_distributed.BroadCast;
 import src.rmi_distributed.BroadCastImp;

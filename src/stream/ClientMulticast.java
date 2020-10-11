@@ -7,8 +7,23 @@ import java.util.Scanner;
 
 public class ClientMulticast {
 
+    private static boolean firstClient = true;
+    private static String groupName = "";
+
     public static void main(String [] args) {
+
         Scanner sc = new Scanner(System.in);
+
+        /*if(firstClient){
+            System.out.print("Saisir le nom du group : ");
+            groupName = sc.nextLine();
+        }else {
+            firstClient = false;
+        }*/
+
+
+        System.out.print("Saisir votre pseudo : ");
+        String nickname = sc.nextLine();
 
         try {
             // Group IP address
@@ -20,24 +35,32 @@ public class ClientMulticast {
 
             // Join the group
             s.joinGroup(groupAddr);
-
+            System.out.println("Bienvenu dans le groupe");
+            System.out.println("Pour quitter le groupe, tapez \"q\"");
             // Build a datagram packet for a message
             // to send to the group
             //String msg = "Hello";
             DatagramPacket msg = null;
 
             String line;
+
             ClientMulticastOutputThread clmot = new ClientMulticastOutputThread(s);
             clmot.start();
             while (true) {
-                line=sc.nextLine();
-                if (line.equals(".")) break;
+                line = nickname+" : ";
+                line+=sc.nextLine();
+                if (line.equals(nickname+" : q")) {
+                    line=nickname+" : Je quitte le groupe, au revoir !";
+                    msg = new DatagramPacket(line.getBytes(), line.length(), groupAddr, groupPort);
+                    s.send(msg);
+                    s.leaveGroup(groupAddr);
+                    break;
+                }
                 msg = new DatagramPacket(line.getBytes(), line.length(), groupAddr, groupPort);
                 s.send(msg);
-
-                //System.out.println("echo: " + socIn.readLine());
             }
-
+            System.out.println("Sortie");
+            clmot.interrupt();
         } catch (Exception e){
             System.out.println("Error : " + e);
         }
