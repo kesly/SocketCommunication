@@ -27,7 +27,7 @@ public class ClientMulticast {
 
             // Join the group
             s.joinGroup(groupAddr);
-            System.out.println("Bienvenu dans le groupe");
+            System.out.println("Bienvenu dans le groupe "+nickname);
             System.out.println("Pour quitter le groupe, tapez \"q\"");
             // Build a datagram packet for a message
             // to send to the group
@@ -39,16 +39,17 @@ public class ClientMulticast {
             ClientMulticastOutputThread clmot = new ClientMulticastOutputThread(s);
             clmot.start();
             while (true) {
-                line = nickname+" : ";
-                line+=sc.nextLine();
-                if (line.equals(nickname+" : q")) {
-                    line=nickname+" : Je quitte le groupe, au revoir !";
-                    msg = new DatagramPacket(line.getBytes(), line.length(), groupAddr, groupPort);
+
+                line=sc.nextLine();
+                String message = nickname+" : "+line;
+                if (line.equals("q") ) {
+                    message=nickname+" : Je quitte le groupe, au revoir !";
+                    msg = new DatagramPacket(message.getBytes(), message.length(), groupAddr, groupPort);
                     s.send(msg);
                     s.leaveGroup(groupAddr);
                     break;
                 }
-                msg = new DatagramPacket(line.getBytes(), line.length(), groupAddr, groupPort);
+                msg = new DatagramPacket(message.getBytes(), message.length(), groupAddr, groupPort);
                 s.send(msg);
             }
             System.out.println("Sortie");
