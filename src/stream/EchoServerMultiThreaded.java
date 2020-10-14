@@ -15,16 +15,21 @@ import java.io.PrintStream;
 import java.net.*;
 import java.util.ArrayList;
 
+/**
+ * class EchoServerMultiThreaded
+ * Server multiThreaded class with launch a client thread with every client to communicate with him
+ */
 public class EchoServerMultiThreaded  {
+
+	private static ArrayList<Pair<String, String>> messages = new ArrayList<>();
+	private static ArrayList<Pair<Boolean, PrintStream> > clientsOutput = new ArrayList<>();
+	private static int index=0;
   
  	/**
   	* main method
 	* @param EchoServer port
   	* 
   	**/
- 	private static ArrayList<Pair<String, String>> messages = new ArrayList<>();
- 	private static ArrayList<Pair<Boolean, PrintStream> > clientsOutput = new ArrayList<>();
-	private static int index=0;
  	public static void main(String args[]){
 
         ServerSocket listenSocket;
@@ -56,10 +61,19 @@ public class EchoServerMultiThreaded  {
 		}
  	}
 
+	/**
+	 * getClientsOutput
+	 * @return ArrayList of Pair of boolean (client is new or not) and client output stream
+	 */
 	public static ArrayList<Pair<Boolean, PrintStream>> getClientsOutput() {
 		return clientsOutput;
 	}
 
+	/**
+	 *
+	 * @param index of current
+	 * @param clientStream
+	 */
 	public static void setOldClient(int index, PrintStream clientStream){
  		clientsOutput.set(index, new Pair<>(false, clientStream));
 	}

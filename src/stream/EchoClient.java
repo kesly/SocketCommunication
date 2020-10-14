@@ -68,10 +68,6 @@ public class EchoClient {
         stdIn.close();
         echoSocket.close();
     }
-
-    public static String getNickName() {
-        return nickName;
-    }
 }
 
 
