@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class EchoClientReadThread extends Thread {
-    BufferedReader socIn = null;
+    BufferedReader socIn;
 
     public EchoClientReadThread(BufferedReader socIn){
         this.socIn = socIn;
@@ -14,7 +14,7 @@ public class EchoClientReadThread extends Thread {
 
         while (true){
             try {
-                System.out.println("echo: " + this.socIn.readLine());
+                System.out.println(this.socIn.readLine());
             } catch (IOException e) {
                 e.printStackTrace();
             }

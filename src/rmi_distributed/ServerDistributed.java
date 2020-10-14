@@ -1,4 +1,7 @@
-package stream;
+package src.rmi_distributed;
+
+import src.rmi_distributed.BroadCast;
+import src.rmi_distributed.BroadCastImp;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -10,7 +13,7 @@ public class ServerDistributed {
     //-Djava.rmi.server.hostname=127.0.0.1
     public static  void main(String [] args) {
         if(System.getSecurityManager()==null) {
-            System.setProperty("java.security.policy","/Users/keslygassant/Documents/insa/4ifa/sequence1/ecole/reseaux/projet/SocketCommunication/src/security.policy");
+            System.setProperty("java.security.policy","D:\\INSA\\4IFA\\Prog_réseau\\SocketCommunication\\src\\security.policy");
             System.setSecurityManager(new SecurityManager());
         }
 
