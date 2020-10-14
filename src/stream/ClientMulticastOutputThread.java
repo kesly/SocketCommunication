@@ -1,4 +1,4 @@
-package src.stream;
+package stream;
 
 import java.net.DatagramPacket;
 import java.net.MulticastSocket;
@@ -13,8 +13,8 @@ public class ClientMulticastOutputThread extends Thread {
 
     ClientMulticastOutputThread(MulticastSocket ms) {
         this.multicastSocket = ms;
-        buf = new byte[1000];
-        recv = new  DatagramPacket(buf, buf.length);
+        this.buf = new byte[1000];
+        this.recv = new  DatagramPacket(buf, buf.length);
     }
 
     String msg = "";

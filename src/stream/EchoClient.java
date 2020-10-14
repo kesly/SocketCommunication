@@ -4,7 +4,7 @@
  * Date: 10/01/04
  * Authors:
  */
-package src.stream;
+package stream;
 
 import java.io.*;
 import java.net.*;

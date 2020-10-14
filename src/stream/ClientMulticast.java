@@ -1,4 +1,4 @@
-package src.stream;
+package stream;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -13,14 +13,6 @@ public class ClientMulticast {
     public static void main(String [] args) {
 
         Scanner sc = new Scanner(System.in);
-
-        /*if(firstClient){
-            System.out.print("Saisir le nom du group : ");
-            groupName = sc.nextLine();
-        }else {
-            firstClient = false;
-        }*/
-
 
         System.out.print("Saisir votre pseudo : ");
         String nickname = sc.nextLine();
