@@ -6,9 +6,6 @@
  */
 
 package src.stream;
-
-import javafx.util.Pair;
-
 import java.io.*;
 import java.net.*;
 
@@ -18,7 +15,7 @@ public class ClientThread
 	private Socket clientSocket;
 	private String clientNickname;
 	
-	ClientThread(Socket s, String clientNickname) {
+	ClientThread(Socket s) {
 		this.clientSocket = s;
 		this.clientNickname = clientNickname;
 	}
@@ -33,7 +30,11 @@ public class ClientThread
     		socIn = new BufferedReader(
     			new InputStreamReader(clientSocket.getInputStream()));    
     		PrintStream socOut = new PrintStream(clientSocket.getOutputStream());
-    		while (true) {
+
+			this.clientNickname = socIn.readLine();
+
+
+			while (true) {
     		  	String line = socIn.readLine();
 				EchoServerMultiThreaded.addMessage(clientNickname, line);
 				//socOut.println(EchoServerMultiThreaded.getMessage());

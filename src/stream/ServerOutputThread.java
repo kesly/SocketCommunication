@@ -17,25 +17,32 @@ public class ServerOutputThread extends Thread {
     public void run() {
         try {
             while (true) {
-
+                int size = EchoServerMultiThreaded.getMessages().size();
                 for (int j = 0; j<EchoServerMultiThreaded.getClientsOutput().size(); j++) {
                     Pair<Boolean, PrintStream> pairSocOut = EchoServerMultiThreaded.getClientsOutput().get(j);
-                    if(pairSocOut.getKey()){
-                        for (int i = 0; i<EchoServerMultiThreaded.getMessages().size(); i++) {
-                            pairSocOut.getValue().println(EchoServerMultiThreaded.getMessages().get(i).getKey()+" : "+EchoServerMultiThreaded.getMessages().get(i).getValue());
-                            EchoServerMultiThreaded.setOldClient(j, pairSocOut.getValue());
+                    if(pairSocOut.getKey()){ // new
+//                        for (int i = 0; i<EchoServerMultiThreaded.getMessages().size(); i++) {
+//                            pairSocOut.getValue().println(EchoServerMultiThreaded.getMessages().get(i).getKey()+" : "+EchoServerMultiThreaded.getMessages().get(i).getValue());
+//                        }
+                        for (Pair message : EchoServerMultiThreaded.getMessages()) {
+                            pairSocOut.getValue().println(message.getKey()+" : "+message.getValue());
                         }
+                        EchoServerMultiThreaded.setOldClient(j, pairSocOut.getValue());
                     }else {
-                        System.out.println("entree 0000 : "+this.currentIndex);
-                        if (EchoServerMultiThreaded.getMessages().size() > this.currentIndex) {
+                        if (size > this.currentIndex) {
                             System.out.println("entree");
-                            for (int i = this.currentIndex; i < EchoServerMultiThreaded.getMessages().size(); i++) {
-                                pairSocOut.getValue().println(EchoServerMultiThreaded.getMessages().get(i).getKey()+" : "+EchoServerMultiThreaded.getMessages().get(i).getValue());
+                            for (int i = this.currentIndex; i < size; i++) {
+                                Pair message = EchoServerMultiThreaded.getMessages().get(i);
+                                pairSocOut.getValue().println(message.getKey()+" : "+message.getValue());
                             }
+
+                           // for (Pair message : EchoServerMultiThreaded.getMessages()) {
+                             //   pairSocOut.getValue().println( message.getKey()+" : "+message.getValue() );
+                            //s}
                         }
                     }
                 }
-                this.currentIndex = EchoServerMultiThreaded.getMessages().size();
+                this.currentIndex = size;
             }
 
         } catch (Exception e) {

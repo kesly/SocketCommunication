@@ -52,7 +52,7 @@ public class EchoClient {
             nickName=stdIn.readLine();
             socOut.println(nickName);
         }
-
+        System.out.println("Bienvenue "+nickName+" dans le groupe, vous pouvez commencer tchater !");
 
         String line;
         EchoClientReadThread ecrt = new EchoClientReadThread(socIn);

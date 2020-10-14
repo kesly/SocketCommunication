@@ -45,13 +45,8 @@ public class EchoServerMultiThreaded  {
 			cot.start();
 			while (true) {
 				Socket clientSocket = listenSocket.accept();
-				BufferedReader socIn = null;
-				socIn = new BufferedReader(
-						new InputStreamReader(clientSocket.getInputStream()));
-				String nickname = socIn.readLine();
-				System.out.println("Connexion from:" + clientSocket.getInetAddress()+", Port: "+clientSocket.getPort()+", Name : "+nickname);
-
-				ClientThread ct = new ClientThread(clientSocket, nickname);
+				System.out.println("Connexion from:" + clientSocket.getInetAddress()+", Port: "+clientSocket.getPort());
+				ClientThread ct = new ClientThread(clientSocket);
 				clientsOutput.add(new Pair<>(true, new PrintStream(clientSocket.getOutputStream())));
 				ct.start();
 
