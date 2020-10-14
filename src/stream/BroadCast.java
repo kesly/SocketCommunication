@@ -1,4 +1,4 @@
-package src.stream;
+package stream;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

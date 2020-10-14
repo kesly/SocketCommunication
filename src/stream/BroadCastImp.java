@@ -1,4 +1,4 @@
-package src.stream;
+package stream;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;

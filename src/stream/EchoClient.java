@@ -4,8 +4,12 @@
  * Date: 10/01/04
  * Authors:
  */
-package src.stream;
+package stream;
 
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.*;
 import java.net.*;
 
@@ -17,6 +21,7 @@ public class EchoClient {
   *  accepts a connection, receives a message from client then sends an echo to the client
   **/
   public static void main(String[] args) throws IOException {
+
 
         Socket echoSocket = null;
         PrintStream socOut = null;
@@ -58,6 +63,7 @@ public class EchoClient {
         stdIn.close();
         echoSocket.close();
     }
+
 }
 
 

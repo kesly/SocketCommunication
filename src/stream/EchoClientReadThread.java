@@ -1,4 +1,4 @@
-package src.stream;
+package stream;
 
 import java.io.BufferedReader;
 import java.io.IOException;
