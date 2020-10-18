@@ -3,9 +3,11 @@ package stream;
 import java.net.DatagramPacket;
 import java.net.MulticastSocket;
 
+/**
+ * This class provide a Thread that been used to receive message from multicast socket and print it
+ */
 public class ClientMulticastOutputThread extends Thread {
 
-    private int currentIndex = 0;
     private MulticastSocket multicastSocket;
 
     byte[] buf;
@@ -14,17 +16,19 @@ public class ClientMulticastOutputThread extends Thread {
     ClientMulticastOutputThread(MulticastSocket ms) {
         this.multicastSocket = ms;
         this.buf = new byte[1000];
-        this.recv = new  DatagramPacket(buf, buf.length);
+        this.recv = new DatagramPacket(buf, buf.length);
     }
 
-    String msg = "";
+    /**
+     * Receive message and print it
+     */
     public void run() {
         try {
             while (true) {
                 multicastSocket.receive(recv);
-                System.out.println(new String(recv.getData() ) );
+                System.out.println(new String(recv.getData()));
                 buf = new byte[1000];
-                recv = new  DatagramPacket(buf, buf.length);
+                recv = new DatagramPacket(buf, buf.length);
             }
 
         } catch (Exception e) {

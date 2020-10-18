@@ -1,34 +1,36 @@
-/***
- * EchoServer
- * Example of a TCP server
- * Date: 10/01/04
- * Authors:
- */
-
 package stream;
 
 import javafx.util.Pair;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.*;
 import java.util.ArrayList;
 
 /**
- * class EchoServerMultiThreaded
- * Server multiThreaded class with launch a client thread with every client to communicate with him
+ * Server multiThreaded class that provide a group chat
+ * <p>
+ * Client can come and chat with others clients that present in the chat, all message are preserve and so new client have access to older message
+ * <p>
+ * For each client, we launch a Thread to manage him
  */
 public class EchoServerMultiThreaded {
 
+    /**
+     * The list of all messages sended by all clients
+     */
     private static ArrayList<Pair<String, String>> messages = new ArrayList<>();
-    private static ArrayList<Pair<Boolean, PrintStream>> clientsOutput = new ArrayList<>();
-    private static int index = 0;
 
     /**
-     * main method
+     * ArrayList of Pair of boolean (client is new or not) and client output stream
+     */
+    private static ArrayList<Pair<Boolean, PrintStream>> clientsOutput = new ArrayList<>();
+
+    /**
+     * Accept client connection and launch Thread to manage him
+     *
+     * @param args list of arguments, the first parameter is the listening port of the server
      **/
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         ServerSocket listenSocket;
 
@@ -55,29 +57,40 @@ public class EchoServerMultiThreaded {
     }
 
     /**
-     * getClientsOutput
+     * Access to the clientsOutput
      *
-     * @return ArrayList of Pair of boolean (client is new or not) and client output stream
+     * @return clientsOutput array
      */
     public static ArrayList<Pair<Boolean, PrintStream>> getClientsOutput() {
         return clientsOutput;
     }
 
     /**
-     * @param index        of current
-     * @param clientStream
+     * Set client status to old
+     *
+     * @param index        client index in the clientsOutput array
+     * @param clientStream client to set to old
      */
     public static void setOldClient(int index, PrintStream clientStream) {
         clientsOutput.set(index, new Pair<>(false, clientStream));
     }
 
+    /**
+     * Access to the messages array
+     *
+     * @return messages array
+     */
     public static synchronized ArrayList<Pair<String, String>> getMessages() {
         return messages;
     }
 
+    /**
+     * Add client message to messages array
+     *
+     * @param nickName client that send the message
+     * @param message  the message sent by the client
+     */
     public static synchronized void addMessage(String nickName, String message) {
-        index++;
-        System.out.print("index=" + index);
         EchoServerMultiThreaded.messages.add(new Pair<>(nickName, message));
     }
 }

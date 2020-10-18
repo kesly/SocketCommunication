@@ -103,3 +103,4 @@ hs_err_pid*
 .idea/vcs.xml
 SocketCommunication.iml
 
+src/rmi_distributed

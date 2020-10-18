@@ -4,6 +4,11 @@ import javafx.util.Pair;
 
 import java.io.PrintStream;
 
+/**
+ * This class is a Thread that been launched by nEchoServerMultiThreaded
+ * <p>
+ * Get message sent by a client and send it back to every clients
+ */
 public class ServerOutputThread extends Thread {
 
     private int currentIndex = 0;
@@ -12,7 +17,9 @@ public class ServerOutputThread extends Thread {
     }
 
     /**
-     * receives a request from client then sends an echo to the client
+     * Receive message and sent it to every client
+     * <p>
+     * Also Send older messages for new client
      **/
     public void run() {
         try {
